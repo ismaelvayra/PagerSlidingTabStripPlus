@@ -15,12 +15,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
-import com.astuetz.PagerSlidingTabStrip.IconTabProvider;
+import com.astuetz.PagerSlidingTabStripPlus;
+import com.astuetz.PagerSlidingTabStripPlus.IconTabProvider;
 
 public class QuickContactFragment extends DialogFragment {
 
-	private PagerSlidingTabStrip tabs;
+	private PagerSlidingTabStripPlus tabs;
 	private ViewPager pager;
 	private ContactPagerAdapter adapter;
 
@@ -39,7 +39,7 @@ public class QuickContactFragment extends DialogFragment {
 
 		View root = inflater.inflate(R.layout.fragment_quick_contact, container, false);
 
-		tabs = (PagerSlidingTabStrip) root.findViewById(R.id.tabs);
+		tabs = (PagerSlidingTabStripPlus) root.findViewById(R.id.tabs);
 		pager = (ViewPager) root.findViewById(R.id.pager);
 		adapter = new ContactPagerAdapter();
 

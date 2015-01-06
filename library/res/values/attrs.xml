@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="PagerSlidingTabStrip">
+    <declare-styleable name="PagerSlidingTabStripPlus">
         <attr name="pstsIndicatorColor" format="color" />
         <attr name="pstsUnderlineColor" format="color" />
         <attr name="pstsDividerColor" format="color" />
@@ -13,8 +13,7 @@
         <attr name="pstsTabBackground" format="reference" />
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
-        <attr name="pstsSelectedTextColor" format="color" />
-        <attr name="pstsUnselectedTextColor" format="color" />
+        <attr name="pstsTextColorTab" format="color" />
         <attr name="pstsIndicatorAlpha" format="integer" />
         <attr name="pstsHasDivider" format="boolean"/>
     </declare-styleable>

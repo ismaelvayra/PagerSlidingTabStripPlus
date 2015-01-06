@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.astuetz.PagerSlidingTabStrip
+    <com.astuetz.PagerSlidingTabStripPlus
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:background="@drawable/background_tabs"
         app:pstsHasDivider="false"
         app:pstsIndicatorAlpha="255"
-        app:pstsSelectedTextColor="@color/tab_text_aesthetic" />
+        app:pstsTextColorTab="#000000" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

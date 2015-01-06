@@ -40,15 +40,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.util.Locale;
 
 import com.astuetz.pagerslidingtabstrip.R;
 
-import org.w3c.dom.Text;
-
-public class PagerSlidingTabStrip extends HorizontalScrollView {
+public class PagerSlidingTabStripPlus extends HorizontalScrollView {
     
     // ****************** ICON INTERFACE ******************* \\
 	public interface IconTabProvider {
@@ -90,8 +87,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private int indicatorColor = 0xFF666666;
 	private int underlineColor = 0x1A000000;
 	private int dividerColor = 0x1A000000;
-    private ColorStateList selectedTextColor;
-    private int unselectedTextColor = 0xff888888;
+    private ColorStateList textColorTab;
 
 
     // ****************** BOOLEANS DECLARATIONS ******************* \\
@@ -123,15 +119,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 
     // ****************** CONSTRUCTORS ******************* \\
-	public PagerSlidingTabStrip(Context context) {
+	public PagerSlidingTabStripPlus(Context context) {
 		this(context, null);
 	}
 
-	public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
+	public PagerSlidingTabStripPlus(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public PagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
+	public PagerSlidingTabStripPlus(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
 		setFillViewport(true);  // ScrollView stretch his content height to fill his viewport
@@ -165,22 +161,22 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		// get custom attrs
 
-		a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
+		a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStripPlus);
 
-		indicatorColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsIndicatorColor, indicatorColor);
-		underlineColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsUnderlineColor, underlineColor);
-		dividerColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsDividerColor, dividerColor);
-		indicatorHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsIndicatorHeight, indicatorHeight);
-		underlineHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsUnderlineHeight, underlineHeight);
-		dividerPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsDividerPadding, dividerPadding);
-		tabPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsTabPaddingLeftRight, tabPadding);
-		tabBackgroundResId = a.getResourceId(R.styleable.PagerSlidingTabStrip_pstsTabBackground, tabBackgroundResId);
-		shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsShouldExpand, shouldExpand);
-		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
-		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
-        selectedTextColor = a.getColorStateList(R.styleable.PagerSlidingTabStrip_pstsSelectedTextColor);
-        indicatorAlpha = a.getInteger(R.styleable.PagerSlidingTabStrip_pstsIndicatorAlpha, indicatorAlpha);
-        hasDivider = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsHasDivider, hasDivider);
+		indicatorColor = a.getColor(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorColor, indicatorColor);
+		underlineColor = a.getColor(R.styleable.PagerSlidingTabStripPlus_pstsUnderlineColor, underlineColor);
+		dividerColor = a.getColor(R.styleable.PagerSlidingTabStripPlus_pstsDividerColor, dividerColor);
+		indicatorHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorHeight, indicatorHeight);
+		underlineHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsUnderlineHeight, underlineHeight);
+		dividerPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsDividerPadding, dividerPadding);
+		tabPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingLeftRight, tabPadding);
+		tabBackgroundResId = a.getResourceId(R.styleable.PagerSlidingTabStripPlus_pstsTabBackground, tabBackgroundResId);
+		shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsShouldExpand, shouldExpand);
+		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsScrollOffset, scrollOffset);
+		textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsTextAllCaps, textAllCaps);
+        textColorTab = a.getColorStateList(R.styleable.PagerSlidingTabStripPlus_pstsTextColorTab);
+        indicatorAlpha = a.getInteger(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorAlpha, indicatorAlpha);
+        hasDivider = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsHasDivider, hasDivider);
         
 		a.recycle();
 
@@ -312,8 +308,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				tab.setTypeface(tabTypeface, tabTypefaceStyle);
                 
                 // Setting color of textView
-                if (selectedTextColor != null) {
-                    tab.setTextColor(selectedTextColor);
+                if (textColorTab != null) {
+                    tab.setTextColor(textColorTab);
                 } else {
                     tab.setTextColor(Color.BLACK);
                 }
@@ -651,4 +647,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     public void setIndicatorAlpha(int indicatorAlpha) {
         this.indicatorAlpha = indicatorAlpha;
     }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+    
+    
 }

@@ -1,4 +1,4 @@
-# Android PagerSlidingTabStrip
+# Android PagerSlidingTabStripPlus
 
 Interactive paging indicator widget, compatible with the `ViewPager` from the 
 Android Support Library. 
@@ -14,13 +14,13 @@ Try out the sample application [on the Play Store](https://play.google.com/store
   1. Include the library as local library project or add the dependency in your build.gradle.
         
         dependencies {
-            compile 'com.astuetz:pagerslidingtabstrip:1.0.3'
+            compile 'com.astuetz:pagerslidingtabstripPLus:1.0.1'
         }
 
   2. Include the PagerSlidingTabStrip widget in your layout. This should usually be placed
      above the `ViewPager` it represents.
 
-        <com.astuetz.PagerSlidingTabStrip
+        <com.astuetz.PagerSlidingTabStripPlus
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="48dip" />
@@ -58,14 +58,21 @@ your brand:
  * `pstsTabBackground` Background drawable of each tab, should be a StateListDrawable
  * `pstsShouldExpand` If set to true, each tab is given the same weight, default false
  * `pstsTextAllCaps` If true, all tab titles will be upper case, default true
+ 
+# New features
+
+ * `pstsTextColorTab` Text color of the tab. It can be a selector. "state_selected" changes the color
+                        when the tab is selected
+ * `pstsIndicatorAlpha` Alpha of the indicator
+ * `pstsHasDivider` If true, the tabs dividers will be removed
 
 *All attributes have their respective getters and setters to change them at runtime*
 
 # Changelog
 
-### Current Version: 1.0.1
+### Current Version: 1.0.2
 
-### [1.0.1](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.1)
+### [1.0.2](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.1)
 
  * Upgraded gradle build files
  * Changed package name to `com.astuetz.PagerSlidingTabStrip`
@@ -75,7 +82,8 @@ your brand:
 # Developed By
 
  * Andreas Stuetz - <andreas.stuetz@gmail.com>
-
+ * Ismael Vayra - <ismael.vayra@gmail.com> added some features
+ 
 
 ### Credits
 
