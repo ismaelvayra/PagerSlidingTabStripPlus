@@ -100,7 +100,10 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 	private int indicatorHeight = 8;
 	private int underlineHeight = 2;
 	private int dividerPadding = 12;
-	private int tabPadding = 24;
+	private int tabPaddingLeft = 24;
+    private int tabPaddingRight = 24;
+    private int tabPaddingTop = 0;
+    private int tabPaddingBottom = 0;
 	private int dividerWidth = 1;
     private int indicatorAlpha = 255;
     private int tabCount;
@@ -123,7 +126,31 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 		this(context, null);
 	}
 
-	public PagerSlidingTabStripPlus(Context context, AttributeSet attrs) {
+    public Typeface getTabTypeface() {
+        return tabTypeface;
+    }
+
+    public void setTabTypeface(Typeface tabTypeface) {
+        this.tabTypeface = tabTypeface;
+    }
+
+    public int getTabTypefaceStyle() {
+        return tabTypefaceStyle;
+    }
+
+    public void setTabTypefaceStyle(int tabTypefaceStyle) {
+        this.tabTypefaceStyle = tabTypefaceStyle;
+    }
+
+    public int getTabTextSize() {
+        return tabTextSize;
+    }
+
+    public void setTabTextSize(int tabTextSize) {
+        this.tabTextSize = tabTextSize;
+    }
+
+    public PagerSlidingTabStripPlus(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
@@ -146,7 +173,10 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 		indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
 		underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
 		dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
-		tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPadding, dm);
+		tabPaddingLeft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPaddingLeft, dm);
+        tabPaddingRight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPaddingRight, dm);
+        tabPaddingTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPaddingTop, dm);
+        tabPaddingBottom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPaddingBottom, dm);
 		dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
 		tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 
@@ -169,7 +199,10 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 		indicatorHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorHeight, indicatorHeight);
 		underlineHeight = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsUnderlineHeight, underlineHeight);
 		dividerPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsDividerPadding, dividerPadding);
-		tabPadding = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingLeftRight, tabPadding);
+		tabPaddingLeft = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingLeft, tabPaddingLeft);
+        tabPaddingRight = a.getDimensionPixelOffset(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingRight, tabPaddingRight);
+        tabPaddingTop = a.getDimensionPixelOffset(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingTop, tabPaddingTop);
+        tabPaddingBottom = a.getDimensionPixelOffset(R.styleable.PagerSlidingTabStripPlus_pstsTabPaddingBottom, tabPaddingBottom);
 		tabBackgroundResId = a.getResourceId(R.styleable.PagerSlidingTabStripPlus_pstsTabBackground, tabBackgroundResId);
 		shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsShouldExpand, shouldExpand);
 		scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsScrollOffset, scrollOffset);
@@ -177,6 +210,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
         textColorTab = a.getColorStateList(R.styleable.PagerSlidingTabStripPlus_pstsTextColorTab);
         indicatorAlpha = a.getInteger(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorAlpha, indicatorAlpha);
         hasDivider = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsHasDivider, hasDivider);
+        tabTextSize = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsTabTextSize, tabTextSize);
         
 		a.recycle();
 
@@ -255,7 +289,10 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 				}
 
 				currentPosition = pager.getCurrentItem();
-				scrollToChild(currentPosition, 0);
+                
+                tabsContainer.getChildAt(currentPosition).setSelected(true);
+                
+                scrollToChild(currentPosition, 0);
 			}
 		});
 
@@ -289,7 +326,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
             }
         });
 
-		tab.setPadding(tabPadding, 0, tabPadding, 0);
+		tab.setPadding(tabPaddingLeft, tabPaddingTop, tabPaddingRight, tabPaddingBottom);
 		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
@@ -325,8 +362,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 				}
 			}
 		}
-
-       tabsContainer.getChildAt(0).setSelected(true);
+        
 	}
 
 	private void scrollToChild(int position, int offset) {
@@ -424,9 +460,8 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);
 			}
-            
+
             tabsContainer.getChildAt(position).setSelected(true);
-            
             for (int i=0; i < tabsContainer.getChildCount(); i++) {
                 if (i!=position) {
                     tabsContainer.getChildAt(i).setSelected(false);
@@ -577,12 +612,12 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 	}
 
 	public void setTabPaddingLeftRight(int paddingPx) {
-		this.tabPadding = paddingPx;
+		this.tabPaddingLeft = paddingPx;
 		updateTabStyles();
 	}
 
 	public int getTabPaddingLeftRight() {
-		return tabPadding;
+		return tabPaddingLeft;
 	}
 
 	@Override

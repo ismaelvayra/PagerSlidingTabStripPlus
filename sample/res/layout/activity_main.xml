@@ -11,7 +11,7 @@
         android:background="@drawable/background_tabs"
         app:pstsHasDivider="false"
         app:pstsIndicatorAlpha="255"
-        app:pstsTextColorTab="#000000" />
+        app:pstsTextColorTab="@color/tab_text_aesthetic" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

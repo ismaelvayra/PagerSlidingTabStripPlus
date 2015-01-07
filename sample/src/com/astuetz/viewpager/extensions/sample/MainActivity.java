@@ -66,7 +66,8 @@ public class MainActivity extends FragmentActivity {
 		tabs.setViewPager(pager);
 
 		changeColor(currentColor);
-	}
+        
+ 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -8,14 +8,18 @@
         <attr name="pstsIndicatorHeight" format="dimension" />
         <attr name="pstsUnderlineHeight" format="dimension" />
         <attr name="pstsDividerPadding" format="dimension" />
-        <attr name="pstsTabPaddingLeftRight" format="dimension" />
         <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabPaddingLeft" format="dimension" />
+        <attr name="pstsTabPaddingRight" format="dimension" />
+        <attr name="pstsTabPaddingTop" format="dimension" />
+        <attr name="pstsTabPaddingBottom" format="dimension" />
         <attr name="pstsTabBackground" format="reference" />
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
         <attr name="pstsTextColorTab" format="color" />
         <attr name="pstsIndicatorAlpha" format="integer" />
         <attr name="pstsHasDivider" format="boolean"/>
+        <attr name="pstsTabTextSize" format="dimension" />
     </declare-styleable>
 
 </resources>

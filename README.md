@@ -13,10 +13,8 @@ Try out the sample application [on the Play Store](https://play.google.com/store
 
   1. Include the library as local library project or add the dependency in your build.gradle.
         
-        dependencies {
-            compile 'com.astuetz:pagerslidingtabstripPLus:1.0.1'
-        }
-
+        //TODO
+        
   2. Include the PagerSlidingTabStrip widget in your layout. This should usually be placed
      above the `ViewPager` it represents.
 
@@ -65,14 +63,19 @@ your brand:
                         when the tab is selected
  * `pstsIndicatorAlpha` Alpha of the indicator
  * `pstsHasDivider` If true, the tabs dividers will be removed
+ * `pstsTabPaddingLeft` padding left of the text
+ * `pstsTabPaddingRight` padding right of the text
+ * `pstsTabPaddingTop` padding top of the text
+ * `pstsTabPaddingBottom` padding bottom of the text
+ * `pstsTabTextSize` text size of the tabs
 
 *All attributes have their respective getters and setters to change them at runtime*
 
 # Changelog
 
-### Current Version: 1.0.2
+### Current Version: 1.0.3
 
-### [1.0.2](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.1)
+### [1.0.2](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.3)
 
  * Upgraded gradle build files
  * Changed package name to `com.astuetz.PagerSlidingTabStrip`
