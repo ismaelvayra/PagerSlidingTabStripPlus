@@ -68,6 +68,12 @@ your brand:
  * `pstsTabPaddingTop` padding top of the text
  * `pstsTabPaddingBottom` padding bottom of the text
  * `pstsTabTextSize` text size of the tabs
+ * `pstsTabsTitleGravity` set gravity of the titles of the tabs
+ 
+ Also added some functions to add subtitles for each tabs and if you want to customize them
+  you can get them.
+  
+  for add subtitle use this function addSubtitleAtTab
 
 *All attributes have their respective getters and setters to change them at runtime*
 
@@ -75,7 +81,7 @@ your brand:
 
 ### Current Version: 1.0.3
 
-### [1.0.2](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.3)
+### [1.0.3](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.3)
 
  * Upgraded gradle build files
  * Changed package name to `com.astuetz.PagerSlidingTabStrip`
