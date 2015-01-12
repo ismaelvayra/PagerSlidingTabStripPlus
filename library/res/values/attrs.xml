@@ -20,6 +20,7 @@
         <attr name="pstsIndicatorAlpha" format="integer" />
         <attr name="pstsHasDivider" format="boolean"/>
         <attr name="pstsTabTextSize" format="dimension" />
+        <attr name="pstsTabsTitleGravity" format="integer" />
     </declare-styleable>
 
 </resources>

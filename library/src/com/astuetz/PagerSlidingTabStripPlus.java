@@ -35,6 +35,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -108,6 +109,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
     private int indicatorAlpha = 255;
     private int tabCount;
     private int lastScrollX = 0;
+    private int tabsGravity = Gravity.CENTER;
 
 
     // ****************** TEXT VALUES DECLARATIONS ******************* \\
@@ -211,7 +213,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
         indicatorAlpha = a.getInteger(R.styleable.PagerSlidingTabStripPlus_pstsIndicatorAlpha, indicatorAlpha);
         hasDivider = a.getBoolean(R.styleable.PagerSlidingTabStripPlus_pstsHasDivider, hasDivider);
         tabTextSize = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStripPlus_pstsTabTextSize, tabTextSize);
-        
+        tabsGravity = a.getInteger(R.styleable.PagerSlidingTabStripPlus_pstsTabsTitleGravity, tabsGravity);
 		a.recycle();
 
 		rectPaint = new Paint();
@@ -302,7 +304,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 
 		TextView tab = new TextView(getContext());
 		tab.setText(title);
-		tab.setGravity(Gravity.CENTER);
+		tab.setGravity(tabsGravity);
 		tab.setSingleLine();
 
 		addTab(position, tab);
@@ -327,42 +329,48 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
         });
 
 		tab.setPadding(tabPaddingLeft, tabPaddingTop, tabPaddingRight, tabPaddingBottom);
-		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
+        LinearLayout tabLayout = new LinearLayout(getContext());
+        tabLayout.setOrientation(LinearLayout.VERTICAL);
+        tabLayout.setGravity(Gravity.CENTER);
+        tabLayout.addView(tab, 0, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
+		tabsContainer.addView(tabLayout, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
 	private void updateTabStyles() {
 
 		for (int i = 0; i < tabCount; i++) {
-
-			View v = tabsContainer.getChildAt(i);
-
-			v.setBackgroundResource(tabBackgroundResId);
-
-			if (v instanceof TextView) {
-
-				TextView tab = (TextView) v;
-				tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
-				tab.setTypeface(tabTypeface, tabTypefaceStyle);
+            
+            for (int k=0; k < ((LinearLayout)tabsContainer.getChildAt(i)).getChildCount(); k++) {
                 
-                // Setting color of textView
-                if (textColorTab != null) {
-                    tab.setTextColor(textColorTab);
-                } else {
-                    tab.setTextColor(Color.BLACK);
+                View v = ((LinearLayout)tabsContainer.getChildAt(i)).getChildAt(k);
+    
+                v.setBackgroundResource(tabBackgroundResId);
+    
+                if (v instanceof TextView) {
+
+                    TextView tab = (TextView) v;
+                    tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
+                    tab.setTypeface(tabTypeface, tabTypefaceStyle);
+
+                    // Setting color of textView
+                    if (textColorTab != null) {
+                        tab.setTextColor(textColorTab);
+                    } else {
+                        tab.setTextColor(Color.BLACK);
+                    }
+
+                    // setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
+                    // pre-ICS-build
+                    if (textAllCaps) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                            tab.setAllCaps(true);
+                        } else {
+                            tab.setText(tab.getText().toString().toUpperCase(locale));
+                        }
+                    }
                 }
-                
-				// setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
-				// pre-ICS-build
-				if (textAllCaps) {
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-						tab.setAllCaps(true);
-					} else {
-						tab.setText(tab.getText().toString().toUpperCase(locale));
-					}
-				}
 			}
 		}
-        
 	}
 
 	private void scrollToChild(int position, int offset) {
@@ -471,12 +479,36 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
 
 	}
     
-    public TextView getCurrentTextViewTabObject() {
-        return (TextView)tabsContainer.getChildAt(currentPosition);
+    public TextView getCurrentTextViewTitleTabObject() {
+        return (TextView)((LinearLayout)tabsContainer.getChildAt(currentPosition)).getChildAt(0);
     }
 
-    public TextView getTextViewTabObjectAtPosition(int position) {
-        return (TextView)tabsContainer.getChildAt(position);
+    public TextView getTextViewTitleTabObjectAtPosition(int position) {
+        return (TextView)((LinearLayout)tabsContainer.getChildAt(position)).getChildAt(0);
+    }
+    
+    public LinearLayout getCurrentSingleTabLayout() {
+        return (LinearLayout)tabsContainer.getChildAt(currentPosition);
+    }
+
+    public LinearLayout getSingleTabLayoutAtPosition(int position) {
+        return (LinearLayout)tabsContainer.getChildAt(position);
+    }
+    
+    public void addSubtitleAtTab(int position, String text) {
+        LinearLayout tab = getSingleTabLayoutAtPosition(position);
+        tab.setWeightSum(tab.getChildCount()+1);
+        if (tab.getChildCount()==1) {
+            tab.getChildAt(0).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        }
+        
+        TextView newSubTab = new TextView(getContext());
+        newSubTab.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        newSubTab.setText(text);
+        newSubTab.setGravity(Gravity.CENTER_HORIZONTAL);
+        
+        tab.addView(newSubTab);
+        updateTabStyles();
     }
 
 	public void setIndicatorColor(int indicatorColor) {
@@ -686,6 +718,5 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
     public int getCurrentPosition() {
         return currentPosition;
     }
-    
     
 }
