@@ -494,7 +494,12 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
     public LinearLayout getSingleTabLayoutAtPosition(int position) {
         return (LinearLayout)tabsContainer.getChildAt(position);
     }
-    
+
+    /**
+     * Add new text view to the linear layout that contains the tab title*
+     * @param position of the linear layout in the tabsContainer
+     * @param text is the text of the subtitle
+     */
     public void addSubtitleAtTab(int position, String text) {
         LinearLayout tab = getSingleTabLayoutAtPosition(position);
         tab.setWeightSum(tab.getChildCount()+1);
