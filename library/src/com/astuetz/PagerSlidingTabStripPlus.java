@@ -327,12 +327,11 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
                 pager.setCurrentItem(position);
             }
         });
-
-		tab.setPadding(tabPaddingLeft, tabPaddingTop, tabPaddingRight, tabPaddingBottom);
+        tab.setPadding(tabPaddingLeft, tabPaddingTop, tabPaddingRight, tabPaddingBottom);
         LinearLayout tabLayout = new LinearLayout(getContext());
         tabLayout.setOrientation(LinearLayout.VERTICAL);
         tabLayout.setGravity(Gravity.CENTER);
-        tabLayout.addView(tab, 0, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
+        tabLayout.addView(tab, 0, defaultTabLayoutParams);
 		tabsContainer.addView(tabLayout, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
@@ -506,6 +505,8 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
         if (tab.getChildCount()==1) {
             tab.getChildAt(0).setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         }
+
+        ((TextView)tab.getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
         
         TextView newSubTab = new TextView(getContext());
         newSubTab.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
@@ -723,5 +724,7 @@ public class PagerSlidingTabStripPlus extends HorizontalScrollView {
     public int getCurrentPosition() {
         return currentPosition;
     }
+    
+
     
 }
